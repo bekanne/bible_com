@@ -34,15 +34,19 @@ Reload your shell configuration or open a new terminal.
 The script requires the following arguments:
 
 ```text
+bible_com.py [-h] [-t TRANSLATION] [-p PARALLEL] book chapter [verse]
 
-bible_com.py [-h] -b BOOK -c CHAPTER [-v VERSE] [-t TRANSLATION] [-p PARALLEL]
+Open Bible verses in web browser.
 
-  -h, --help - show this help message and exit
-  -b, --book BOOK - Name of the book
-  -c, --chapter CHAPTER - Chapter number
-  -v, --verse VERSE - Verse number
-  -t, --translation TRANSLATION - Translation version
-  -p, --parallel PARALLEL - Translation for parallel view
+positional arguments:
+  book                  Name of the book
+  chapter               Chapter number
+  verse                 Verse number
+
+options:
+  -h, --help                      show this help message and exit
+  -t TRANSLATION, --translation   TRANSLATION Translation version
+  -p PARALLEL, --parallel         PARALLEL Translation for parallel view
 ```
 
 ### Examples
@@ -50,10 +54,10 @@ bible_com.py [-h] -b BOOK -c CHAPTER [-v VERSE] [-t TRANSLATION] [-p PARALLEL]
 ```bash
 
 # Open Genesis 1
-bible -b genesis -c 1
+bible genesis 1
 
 # Open John 3:16 in the ESV translation
-bible -b john -c 3 -v 16 -t esv
+bible john 3 16 -t esv
 ```
 
 ## Edit/Add Config Files

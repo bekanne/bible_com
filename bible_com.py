@@ -29,8 +29,9 @@ def get_book(book):
         print('Invalid book name.')
         print(f'Config: {config}')
         exit(1)
-    except configparser.NoSectionError as e:
+    except (configparser.NoSectionError, configparser.NoOptionError) as e:
         print(f'Error by reading config: {e}')
+        exit(1)
     return book_shortcut
 
 def get_translation(translation):
@@ -43,7 +44,7 @@ def get_translation(translation):
     else:
         try:
             translation_id = config.get(section_name, translation)
-        except ValueError:
+        except (ValueError, configparser.NoOptionError):
             print('Invalid translation name. Using default.')
             return 157
         return translation_id
@@ -53,9 +54,9 @@ def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description='Open Bible verses in web browser.')
 
     # Define the command line arguments
-    parser.add_argument('-b', '--book', required=True, help='Name of the book')
-    parser.add_argument('-c', '--chapter', required=True, type=int, help='Chapter number')
-    parser.add_argument('-v', '--verse', type=int, help='Verse number')
+    parser.add_argument('book', help='Name of the book')
+    parser.add_argument('chapter', type=int, help='Chapter number')
+    parser.add_argument('verse', nargs='?', type=int, help='Verse number')
     parser.add_argument('-t', '--translation', type=str, help='Translation version')
     parser.add_argument('-p', '--parallel', type=str, help='Translation for parallel view')
 
