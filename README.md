@@ -39,7 +39,7 @@ bible_com.py [-h] [-t TRANSLATION] [-p PARALLEL] book chapter [verse]
 Open Bible verses in web browser.
 
 positional arguments:
-  book                  Name of the book
+  book                  Name of the book - can be upper or lower case, also just the beginning of the book name (e.g. 'heb' for Hebrews)
   chapter               Chapter number
   verse                 Verse number
 
@@ -54,7 +54,7 @@ options:
 ```bash
 
 # Open Genesis 1
-bible genesis 1
+bible gen 1
 
 # Open John 3:16 in the ESV translation
 bible john 3 16 -t esv
