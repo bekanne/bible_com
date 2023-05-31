@@ -12,12 +12,16 @@ def read_config():
     # Get the directory of the current script file
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_dir, 'config.cfg')
-    # Read the configured language
-    language_config = configparser.ConfigParser(allow_no_value=True)
-    language_config.read(config_path)
-    language = list(language_config['language'].keys())[0]
+    # Read the config file
+    config = configparser.ConfigParser(allow_no_value=True)
+    config.read(config_path)
+    # for every langeuage in the config file read the config file for the language
+    languages = list(config['languages'].keys())
+    for language in languages:
+        config_path = os.path.join(script_dir, f'config_{language}.cfg')
+        config.read(config_path)
+    # Read the config file for the configured language
     config_path = os.path.join(script_dir, f'config_{language}.cfg')
-    config = configparser.ConfigParser()
     config.read(config_path)
     return config
 
@@ -68,11 +72,21 @@ def get_translation(translation):
             print('Invalid translation name. Using default.')
             return 157
         return translation_id
+    
+
+def get_translations():
+    """Return a list of all translations from the config file."""
+    # Read the list of translations from the config file
+    config = read_config()
+    translations = config.options('translations')
+    return translations
 
 
 def create_parser() -> argparse.ArgumentParser:
     """Create an argument parser."""
-    parser = argparse.ArgumentParser(description='Open Bible verses in web browser.')
+    translation_list = get_translations()
+    parser = argparse.ArgumentParser(description='Open Bible verses in web browser.',
+                                     epilog=f'Available translations: {", ".join(translation_list)}')
 
     # Define the command line arguments
     parser.add_argument('book', help='Name of the book - can be upper or lower case, also just the beginning of the book name (e.g. \'heb\' for Hebrews)')
