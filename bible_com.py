@@ -70,7 +70,7 @@ def get_translation(translation):
             translation_id = config.get(section_name, translation)
         except (ValueError, configparser.NoOptionError):
             print('Invalid translation name. Using default.')
-            return 157
+            return 1
         return translation_id
     
 
